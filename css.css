@@ -1,3 +1,21 @@
 body {
     background: blue;
 }
+
+.icon_link  {
+    width: 30px;
+    height: 30px;
+    background: green;
+    margin: 20px;
+    display: block;
+    position: relative;
+}
+
+.code_link_box {
+    display: none;
+    width: 50px;
+    height: 50px;
+    background: grey;
+    position: absolute;
+    margin: 10px;
+}
