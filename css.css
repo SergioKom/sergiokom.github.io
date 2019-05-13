@@ -9,6 +9,7 @@ body {
     margin: 20px;
     display: block;
     position: relative;
+    cursor: pointer;
 }
 
 .code_link_box {
@@ -17,5 +18,11 @@ body {
     height: 50px;
     background: grey;
     position: absolute;
-    margin: 10px;
+    margin: 0 10px;
+    border: 1px solid black;
+    left: 40px;
+}
+
+.icon_link:hover .code_link_box {
+    display: block !important;
 }
