@@ -5,13 +5,24 @@ body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   color: $text;
-  background: $testcolor;
 }
 *,
 *:before,
 *:after{
   box-sizing: border-box;
   outline: none;
+}
+main {
+  background-color: $main__bg;
+}
+header { 
+  background-color: $header__bg;
+}
+footer {
+  background-color: $footer__bg; 
+}  
+section { 
+  background-color: $white;  
 }
 a {
   text-decoration: none;
