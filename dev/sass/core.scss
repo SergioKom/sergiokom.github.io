@@ -17,12 +17,22 @@ main {
 }
 header { 
   background-color: $header__bg;
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
 footer {
   background-color: $footer__bg; 
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }  
 section { 
-  background-color: $white;  
+  background-color: $white;
+  margin: 20px auto;
+}
+main {
+  height: 800px;
 }
 a {
   text-decoration: none;
@@ -33,6 +43,12 @@ ul {
   li {
     list-style-type: none;
   }
+}
+.wrap {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 15px;
 }
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button,
