@@ -1,5 +1,7 @@
 @import 'vars';
 @import 'mixins';
+@import 'header';
+@import 'footer';
 
 body {
   margin: 0;
@@ -14,25 +16,11 @@ body {
 }
 main {
   background-color: $main__bg;
+  height: calc(100vh - 160px);
 }
-header { 
-  background-color: $header__bg;
-  position: fixed;
-  width: 100%;
-  top: 0;
-}
-footer {
-  background-color: $footer__bg; 
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-}  
 section { 
   background-color: $white;
   margin: 20px auto;
-}
-main {
-  height: 800px;
 }
 a {
   text-decoration: none;
