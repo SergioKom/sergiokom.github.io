@@ -1,55 +1,57 @@
-'use_strict';
-//base part
-let     gulp = require('gulp'),
-        rename  = require('gulp-rename'),
-        path = require('path'),
-        include = require('gulp-include'),
-        uglify  = require('gulp-uglify'),
-        pug = require('gulp-pug');
+const {src, dest, watch, parallel} = require('gulp');
 
-//css part
-let     sass = require('gulp-sass'),
-        cleanCSS = require('gulp-clean-css'),
-        autoprefixer = require('gulp-autoprefixer');
+const scss = require('gulp-sass')(require('sass'));
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify-es').default;
+const browserSync = require('browser-sync').create();
+const autoprefixer = require('gulp-autoprefixer');
+const include = require('gulp-include');
 
-function swallowError(error){
-    console.log(error.toString());
-    this.emit('end');
+function styles() {
+    return src('dev/sass/core.scss')
+        .pipe(autoprefixer({ overrideBrowserlist: ['last 10 version'] }))
+        .pipe(concat('style.min.css'))
+        .pipe(scss({ outputStyle: 'compressed' }))
+        .pipe(dest('ready/css'))
+        .pipe(browserSync.stream())
 }
 
-gulp.task('default', ['gulp_watch']);
+function scripts() {
+    return src([
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/slick-carousel/slick/slick.js',
+        'dev/js/utils.js'
+    ])
+        .pipe(concat('index.min.js'))
+        .pipe(uglify())
+        .pipe(dest('ready/js'))
+        .pipe(browserSync.stream())
+}
 
-gulp.task('gulp_watch', function () {
-    gulp.watch('dev/sass/**/*.scss', ['styles']);
-    gulp.watch('dev/js/**/*.js', ['scripts']);
-    gulp.watch('dev/html/**/*.pug', ['pages']);
-});
-
-gulp.task('styles', function () {
-    return gulp.src('dev/sass/core.scss')
-        .pipe(sass().on('error', sass.logError))
-        .on('error', swallowError)
-        .pipe(autoprefixer({
-            browsers: ['last 20 versions', '> 5%'],
-            cascade: false
+function pages() {
+    return src('dev/html/index.html')
+        .pipe(include({
+            includePaths: 'dev/html/blocks'
         }))
-        .pipe(cleanCSS())
-        .pipe(rename('style.min.css'))
-        .pipe(gulp.dest('./css'));
-});
+        .pipe(dest('ready'))
+        .pipe(browserSync.stream())
+}
 
-gulp.task('scripts', function() {
-    return gulp.src('dev/js/index.js')
-        .pipe(include())
-        .pipe(rename('app.min.js'))
-        .on('error', swallowError)
-        .pipe(uglify()) //минифицируем js файл
-        .pipe(gulp.dest('./js'));   //сохраняем минифицированную версию
-});
+function watcher() {
+    browserSync.init({
+        server: {
+            baseDir: 'ready/'
+        }
+    });
+    watch(['dev/sass/*.scss'], styles)
+    watch(['dev/js/utils.js'], scripts)
+    watch(['dev/html/index.html', 'dev/html/blocks/*.html'], pages)
+    watch(['dev/*.html']).on('change', browserSync.reload)
+}
 
-gulp.task('pages', function buildHTML() {
-    return gulp.src('dev/html/index.pug')
-        .pipe(pug({pretty: true}))
-        .pipe(rename('index.html'))
-        .pipe(gulp.dest('./'));
-});
+exports.styles = styles;
+exports.scripts = scripts;
+exports.pages = pages;
+exports.watcher = watcher;
+
+exports.default = parallel(styles, scripts, pages, watcher);
