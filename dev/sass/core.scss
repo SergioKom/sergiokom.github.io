@@ -17,6 +17,7 @@ body {
 main {
   background-color: $main__bg;
   height: calc(100vh - 160px);
+  padding: 40px;
 }
 section { 
   background-color: $white;
