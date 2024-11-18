@@ -1,0 +1,63 @@
+@import 'vars';
+@import 'mixins';
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: $text;
+}
+*,
+*:before,
+*:after{
+  box-sizing: border-box;
+  outline: none;
+}
+main {
+  background-color: $main__bg;
+}
+header { 
+  background-color: $header__bg;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+footer {
+  background-color: $footer__bg; 
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}  
+section { 
+  background-color: $white;
+  margin: 20px auto;
+}
+main {
+  height: 800px;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  li {
+    list-style-type: none;
+  }
+}
+.wrap {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 15px;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration { display: none; }
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; }
+input:focus::-moz-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; }
+::placeholder {color: $placeholder;}
+
+@import 'media';
